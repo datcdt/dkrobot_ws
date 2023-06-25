@@ -1,0 +1,4 @@
+<launch>
+    <arg name="rvizconfig" default="$(find dkrobot_control)/rviz/dkrobot.rviz" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find dkrobot)/urdf.rviz" required="true" />
+</launch>

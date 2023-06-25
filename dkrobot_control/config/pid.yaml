@@ -1,0 +1,11 @@
+dkrobot:
+  gazebo_ros_control:
+    pid_gains:
+      L_BBD1_joint:
+        p: 150.0
+        i: 250.0
+        d: 0.1
+      R_BBD1_joint:
+        p: 200.0
+        i: 275.0
+        d: 0.1
