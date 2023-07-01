@@ -6,7 +6,7 @@
   <arg name="open_rviz" default="true"/>
 
   <!-- DiffBot -->
-  <!--include file="$(find diffbot_bringup)/launch/diffbot_remote.launch">
+  <!--include file="$(find dkrobot_bringup)/launch/dkrobot_remote.launch">
     <arg name="model" value="$(arg model)" />
   </include-->
   <!-- TODO run robot_state_publisher, this is done if diffbot_control/launch/diffbot.launch is running before this -->

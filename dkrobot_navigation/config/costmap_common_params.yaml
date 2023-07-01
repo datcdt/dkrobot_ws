@@ -10,7 +10,7 @@ raytrace_range: 3.5
 # [ [x1, y1], [x2, y2], ...., [xn, yn] ]. The footprint specification assumes the center point of the robot is at 
 # (0.0, 0.0) in the robot_base_frame and that the points are specified in meters, 
 # both clockwise and counter-clockwise orderings of points are supported.
-footprint: [[-0.08, -0.075], [-0.08, 0.075], [0.105, 0.075], [0.105, -0.075]]
+footprint: [[-0.153, -0.123], [-0.153, 0.123], [0.153, -0.123], [0.153, 0.123]]
 #robot_radius: 0.38
 
 # The radius in meters to which the map inflates obstacle cost values.
@@ -33,4 +33,4 @@ map_type: costmap
 observation_sources: scan
 # Definition of the "scan" observation source. Make sure to set the sensor_frame to the same 
 # name of the laser frame link that is defined in the robot_description. Otherwise the local costamp won't work.
-scan: {sensor_frame: base_scan, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
+can: {sensor_frame: rplidar_laser_link, data_type: LaserScan, topic: scan, marking: true, clearing: true}

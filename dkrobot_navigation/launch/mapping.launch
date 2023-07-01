@@ -1,0 +1,29 @@
+<launch>
+<include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+
+<rosparam file="$(find dkrobot_control)/config/dkrobot_control.yaml" command="load"/>
+  <!-- Arguments -->
+  <arg name="model"/>
+  <param name="robot_description" textfile="$(find dkrobot)/urdf/dkrobot.urdf" />
+  <node pkg="dkrobot_base" type="robot_hardware_interface" name="dkrobot" output="screen"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <arg name="open_rviz" default="true"/>
+  <arg name="rvizconfig" default="$(find dkrobot_slam)/rviz/dkrobot_gmapping.rviz" />
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+    args="joint_state_controller mobile_base_controller"/>
+  <node pkg="teleop_twist_keyboard_control" type="robot_teleop_key.py" name="robot_teleop_key" output="screen"/>
+  
+  <node pkg="gmapping" type="slam_gmapping" name="dkrobot_slam" output="screen">
+    <param name="base_frame" value="base_footprint"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="map_frame"  value="map"/>
+    <rosparam command="load" file="$(find dkrobot_slam)/config/gmapping_params.yaml" />
+  </node>
+
+  <!-- Launch visualization in rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(arg rvizconfig)"/>
+  </group>
+
+</launch>

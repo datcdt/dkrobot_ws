@@ -9,6 +9,8 @@
 #include <dkrobot_msgs/WheelsCmdStamped.h>
 #include <dkrobot_msgs/AngularVelocitiesStamped.h>
 #include <sensor_msgs/JointState.h>
+#include <geometry_msgs/Pose2D.h>
+#include <geometry_msgs/Twist.h>
 
 // ROS Controls
 #include <hardware_interface/robot_hw.h>
@@ -109,40 +111,18 @@ namespace dkrobot_base
          */
         bool isReceivingMeasuredJointStates(const ros::Duration &timeout=ros::Duration(1));
 
-        /** \brief Helper for debugging a joint's state */
-        virtual void printState();
-        std::string printStateHelper();
-
-        /** \brief Helper for debugging a joint's command */
-        std::string printCommandHelper();
-
     protected:
 
         /** \brief Get the URDF XML from the parameter server */
         virtual void loadURDF(const ros::NodeHandle& nh, std::string param_name);
 
         /** \brief Callback to receive the encoder ticks from Teensy MCU */
-        void encoderTicksCallback(const dkrobot_msgs::EncodersStamped::ConstPtr& msg_encoders);
+        void encoderTicksCallback(const geometry_msgs::Pose2D::ConstPtr& msg_encoders);
 
         /** \brief Callback to receive the measured joint states from Teensy MCU */
         void measuredJointStatesCallback(const sensor_msgs::JointState::ConstPtr& msg_joint_states);
-
-        /** \brief Convert number of encoder ticks to angle in radians */
-        double ticksToAngle(const int &ticks) const;
-
-        /** \brief Normalize angle in the range of [0, 360) */
-        double normalizeAngle(double &angle) const;
-
-
-        // The following functions are currently unused
-        // DiffBot directly calculates normalized angles from encoder ticks
-        // The joint_commands from ros_control are mapped to percentage values for the motor driver
-        // The following comments are incorrect
         /** \brief DiffBot reports travel distance in metres, need radians for ros_control RobotHW */
         double linearToAngular(const double &distance) const;
-        /** \brief RobotHW provides velocity command in rad/s, DiffBot needs m/s. */
-        double angularToLinear(const double &angle) const;
-        
 
         // Short name of this class
         std::string name_;
